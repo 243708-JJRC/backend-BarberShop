@@ -64,7 +64,7 @@ class AuthService(
         require(request.apellidoM.isNotBlank()) { "El apellido materno no puede estar vacío" }
         require(request.email.isNotBlank() && request.email.contains("@")) { "Email inválido" }
         require(request.contraseña.length >= 6) { "La contraseña debe tener al menos 6 caracteres" }
-        require(request.telefono > 0) { "Teléfono inválido" }
+        require(request.telefono.length != 10) { "Teléfono inválido" }
         require(request.direccion.isNotBlank()) { "La dirección no puede estar vacía" }
     }
 
@@ -74,6 +74,6 @@ class AuthService(
         require(request.apellidoM.isNotBlank()) { "El apellido materno no puede estar vacío" }
         require(request.email.isNotBlank() && request.email.contains("@")) { "Email inválido" }
         require(request.contraseña.length >= 6) { "La contraseña debe tener al menos 6 caracteres" }
-        require(request.telefono > 0) { "Teléfono inválido" }
+        require(request.telefono.length != 10) { "Teléfono inválido" }
     }
 }
