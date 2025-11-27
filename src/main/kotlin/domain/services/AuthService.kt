@@ -5,40 +5,23 @@ import com.example.data.tables.repositories.ClienteRepository
 import com.example.domain.services.models.Administrador
 import com.example.domain.services.models.AdministradorLogin
 import com.example.domain.services.models.AdministradorRequest
-import com.example.domain.services.models.AuthResponseAdmin
-import com.example.domain.services.models.AuthResponseCliente
 import com.example.domain.services.models.Cliente
 import com.example.domain.services.models.ClienteLogin
 import com.example.domain.services.models.ClienteRequest
-import com.example.utils.JwtConfig
-import org.mindrot.jbcrypt.BCrypt
 
 class AuthService(
     private val clienteRepository: ClienteRepository,
     private val administradorRepository: AdministradorRepository
 ) {
-    suspend fun loginCliente(request: ClienteLogin): AuthResponseCliente? {
-        val (cliente, hashedPassword) = clienteRepository.getClienteByEmail(request.email) ?: return null
 
-        if (!BCrypt.checkpw(request.contraseña, hashedPassword)) {
-            return null
-        }
-
-        val token = JwtConfig.generateToken(cliente.id, cliente.email, "cliente")
-        return AuthResponseCliente(token, cliente)
-    }
-    suspend fun loginAdministrador(request: AdministradorLogin): AuthResponseAdmin? {
-        val (admin, hashedPassword) = administradorRepository.getAdministradorByEmail(request.email) ?: return null
-
-        if (!BCrypt.checkpw(request.contraseña, hashedPassword)) {
-            return null
-        }
-
-        val token = JwtConfig.generateToken(admin.id, admin.email, "administrador")
-        return AuthResponseAdmin(token, admin)
+    // Login Cliente
+    suspend fun loginCliente(request: ClienteLogin): Cliente? {
+        return clienteRepository.login(request.email, request.contraseña)
     }
 
+    // Registro Cliente
     suspend fun registerCliente(request: ClienteRequest): Cliente? {
+        // Verificar email único
         val existingCliente = clienteRepository.getClienteByEmail(request.email)
         if (existingCliente != null) {
             throw IllegalArgumentException("El email ya está registrado")
@@ -48,6 +31,12 @@ class AuthService(
         return clienteRepository.createCliente(request)
     }
 
+    // Login Administrador
+    suspend fun loginAdministrador(request: AdministradorLogin): Administrador? {
+        return administradorRepository.login(request.email, request.contraseña)
+    }
+
+    // Registro Administrador
     suspend fun registerAdministrador(request: AdministradorRequest): Administrador? {
         val existingAdmin = administradorRepository.getAdministradorByEmail(request.email)
         if (existingAdmin != null) {
@@ -64,7 +53,7 @@ class AuthService(
         require(request.apellidoM.isNotBlank()) { "El apellido materno no puede estar vacío" }
         require(request.email.isNotBlank() && request.email.contains("@")) { "Email inválido" }
         require(request.contraseña.length >= 6) { "La contraseña debe tener al menos 6 caracteres" }
-        require(request.telefono.length != 10) { "Teléfono inválido" }
+        require(request.telefono.length == 10) { "El teléfono debe tener 10 dígitos" }
         require(request.direccion.isNotBlank()) { "La dirección no puede estar vacía" }
     }
 
@@ -74,6 +63,6 @@ class AuthService(
         require(request.apellidoM.isNotBlank()) { "El apellido materno no puede estar vacío" }
         require(request.email.isNotBlank() && request.email.contains("@")) { "Email inválido" }
         require(request.contraseña.length >= 6) { "La contraseña debe tener al menos 6 caracteres" }
-        require(request.telefono.length != 10) { "Teléfono inválido" }
+        require(request.telefono.length == 10) { "El teléfono debe tener 10 dígitos" }
     }
 }

@@ -11,7 +11,7 @@ object DatabaseFactory {
     fun init() {
         val config = HikariConfig().apply {
             driverClassName = "org.mariadb.jdbc.Driver"
-            jdbcUrl = System.getenv("DB_URL") ?: "jdbc:mariadb://localhost:3306/barber_shop"
+            jdbcUrl = System.getenv("DB_URL") ?: "jdbc:mariadb://localhost:3306/barber_shop2"
             username = System.getenv("DB_USER") ?: "root"
             password = System.getenv("DB_PASSWORD") ?: ""
             maximumPoolSize = 10

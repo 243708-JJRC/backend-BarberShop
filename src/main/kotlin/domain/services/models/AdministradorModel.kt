@@ -29,3 +29,10 @@ data class AdministradorLogin(
     val email: String,
     val contraseña: String
 )
+
+@Serializable
+data class LoginAdminResponse(
+    val success: Boolean,
+    val message: String,
+    val administrador: Administrador? = null
+)

@@ -24,7 +24,6 @@ fun Application.configureRouting() {
         route("/api") {
             authRoutes(authService)
             negocioRoutes(negocioService)
-
             horarioRoutes(negocioService)
             servicioRoutes(negocioService)
             citaRoutes(citaService)

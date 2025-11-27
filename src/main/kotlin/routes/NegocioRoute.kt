@@ -1,14 +1,10 @@
 package com.example.routes
 
-import com.example.config.getTokenClaims
 import com.example.domain.services.NegocioService
 import com.example.domain.services.models.ApiResponse
 import com.example.domain.services.models.NegocioRequest
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
-import io.ktor.server.auth.authenticate
-import io.ktor.server.auth.jwt.JWTPrincipal
-import io.ktor.server.auth.principal
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.*
@@ -53,20 +49,9 @@ fun Route.negocioRoutes(negocioService: NegocioService) {
             }
         }
 
-        authenticate("auth-jwt") {
-            // Crear barbería (solo admin)
+         // Crear barbería (solo admin)
             post {
                 try {
-                    val principal = call.principal<JWTPrincipal>()!!
-                    val claims = principal.getTokenClaims()
-
-                    if (claims.role != "administrador") {
-                        return@post call.respond(
-                            HttpStatusCode.Forbidden,
-                            ApiResponse<Any>(false, "No autorizado")
-                        )
-                    }
-
                     val request = call.receive<NegocioRequest>()
                     val negocio = negocioService.createNegocio(request)
                     call.respond(
@@ -107,4 +92,3 @@ fun Route.negocioRoutes(negocioService: NegocioService) {
             }
         }
     }
-}

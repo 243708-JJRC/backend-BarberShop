@@ -29,3 +29,10 @@ data class ClienteLogin(
     val email: String,
     val contraseña: String
 )
+
+@Serializable
+data class LoginResponse(
+    val success: Boolean,
+    val message: String,
+    val cliente: Cliente? = null
+)

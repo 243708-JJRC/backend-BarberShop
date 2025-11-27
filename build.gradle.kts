@@ -34,8 +34,6 @@ dependencies {
     implementation("io.ktor:ktor-server-cors-jvm:2.3.12")
     implementation("io.ktor:ktor-server-call-logging-jvm:2.3.12")
     implementation("io.ktor:ktor-server-status-pages-jvm:2.3.12")
-    implementation("io.ktor:ktor-server-auth-jvm:2.3.12")
-    implementation("io.ktor:ktor-server-auth-jwt-jvm:2.3.12")
 
     // Database
     implementation("org.jetbrains.exposed:exposed-core:0.45.0")
@@ -44,10 +42,6 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-java-time:0.45.0")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.3.1")
     implementation("com.zaxxer:HikariCP:5.1.0")
-
-    // Security
-    implementation("org.mindrot:jbcrypt:0.4")
-    implementation("com.auth0:java-jwt:4.4.0")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.14")

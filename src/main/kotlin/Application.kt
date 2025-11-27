@@ -23,7 +23,6 @@ fun Application.module() {
     install(CORS) {
         anyHost()
         allowHeader("Content-Type")
-        allowHeader("Authorization")
         allowMethod(io.ktor.http.HttpMethod.Options)
         allowMethod(io.ktor.http.HttpMethod.Put)
         allowMethod(io.ktor.http.HttpMethod.Delete)
@@ -32,6 +31,5 @@ fun Application.module() {
 
     configureSerialization()
     configureStatusPages()
-    configureSecurity()
     configureRouting()
 }

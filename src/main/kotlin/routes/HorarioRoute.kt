@@ -5,13 +5,11 @@ import com.example.domain.services.models.ApiResponse
 import com.example.domain.services.models.HorarioRequest
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
-import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.*
 
 fun Route.horarioRoutes(negocioService: NegocioService) {
-    authenticate("auth-jwt") {
         route("/horarios") {
 
             post {
@@ -54,4 +52,3 @@ fun Route.horarioRoutes(negocioService: NegocioService) {
             }
         }
     }
-}

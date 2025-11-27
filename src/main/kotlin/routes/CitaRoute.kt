@@ -5,14 +5,12 @@ import com.example.domain.services.models.ActualizarEstadoCita
 import com.example.domain.services.models.ApiResponse
 import com.example.domain.services.models.CitaRequest
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.auth.authenticate
 import io.ktor.server.routing.*
 import io.ktor.server.application.*
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 
 fun Route.citaRoutes(citaService: CitaService) {
-    authenticate("auth-jwt") {
         route("/citas") {
 
             // Historial de citas del cliente
@@ -113,4 +111,3 @@ fun Route.citaRoutes(citaService: CitaService) {
             }
         }
     }
-}
